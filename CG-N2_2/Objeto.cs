@@ -1,7 +1,7 @@
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     internal abstract class Objeto
     {

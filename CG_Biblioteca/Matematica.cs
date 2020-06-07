@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     /// <summary>
     /// Classe com funções matemáticas.

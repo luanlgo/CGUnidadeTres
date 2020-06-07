@@ -1,7 +1,7 @@
 /*
   Autor: Dalton Solano dos Reis
 */
-namespace Biblioteca
+namespace LibraryComponent
 {
     /// <summary>
     /// Classe que define um ponto no espaço 3D com a coordenada homogênea (w) da Transformação Geometrica

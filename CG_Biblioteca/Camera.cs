@@ -2,7 +2,7 @@
   Autor: Dalton Solano dos Reis
 */
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     /// <summary>
     /// Classe para controlar a câmera sintética.

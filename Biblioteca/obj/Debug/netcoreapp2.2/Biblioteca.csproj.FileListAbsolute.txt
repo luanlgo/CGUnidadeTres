@@ -1,0 +1,7 @@
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\bin\Debug\netcoreapp2.2\Biblioteca.deps.json
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\bin\Debug\netcoreapp2.2\Biblioteca.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\bin\Debug\netcoreapp2.2\Biblioteca.pdb
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\obj\Debug\netcoreapp2.2\Biblioteca.AssemblyInfoInputs.cache
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\obj\Debug\netcoreapp2.2\Biblioteca.AssemblyInfo.cs
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\obj\Debug\netcoreapp2.2\Biblioteca.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Biblioteca\obj\Debug\netcoreapp2.2\Biblioteca.pdb

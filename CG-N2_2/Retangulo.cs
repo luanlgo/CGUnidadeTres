@@ -1,6 +1,6 @@
 using System;
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     internal class Retangulo : ObjetoAramado
     {
