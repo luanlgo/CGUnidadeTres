@@ -835,11 +835,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\EditorVetorial\\EditorVetorial.csproj",
+      "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\EditorVetorial\\EditorVetorial.csproj",
       "projectName": "EditorVetorial",
-      "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\EditorVetorial\\EditorVetorial.csproj",
+      "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\EditorVetorial\\EditorVetorial.csproj",
       "packagesPath": "C:\\Users\\55479\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\EditorVetorial\\obj\\",
+      "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\EditorVetorial\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\55479\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -855,8 +855,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj": {
-              "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj"
+            "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj": {
+              "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj"
             }
           }
         }

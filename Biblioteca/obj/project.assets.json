@@ -814,11 +814,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\Biblioteca\\Biblioteca.csproj",
+      "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\Biblioteca\\Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\Biblioteca\\Biblioteca.csproj",
+      "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\Biblioteca\\Biblioteca.csproj",
       "packagesPath": "C:\\Users\\55479\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\Biblioteca\\obj\\",
+      "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\Biblioteca\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\55479\\AppData\\Roaming\\NuGet\\NuGet.Config",

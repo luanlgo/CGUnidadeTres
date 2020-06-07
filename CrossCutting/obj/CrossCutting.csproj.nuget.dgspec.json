@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj": {}
+    "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj": {}
   },
   "projects": {
-    "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj": {
+    "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj",
+        "projectUniqueName": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj",
         "projectName": "CrossCutting",
-        "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\CrossCutting.csproj",
+        "projectPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\CrossCutting.csproj",
         "packagesPath": "C:\\Users\\55479\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\UnidadeTres\\UnidadeTres\\CrossCutting\\obj\\",
+        "outputPath": "C:\\Users\\55479\\Desktop\\Furb\\CG\\CGUnidadeTres\\CrossCutting\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\55479\\AppData\\Roaming\\NuGet\\NuGet.Config",
