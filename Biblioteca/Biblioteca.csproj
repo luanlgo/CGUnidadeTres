@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CG-N2_2\Objeto.cs" Link="N2_2\Objeto.cs" />
+    <Compile Include="..\CG-N2_2\ObjetoAramado.cs" Link="N2_2\ObjetoAramado.cs" />
+    <Compile Include="..\CG-N2_2\Retangulo.cs" Link="N2_2\Retangulo.cs" />
+    <Compile Include="..\CG_Biblioteca\BBox.cs" Link="Biblioteca\BBox.cs" />
+    <Compile Include="..\CG_Biblioteca\Camera.cs" Link="Biblioteca\Camera.cs" />
+    <Compile Include="..\CG_Biblioteca\Matematica.cs" Link="Biblioteca\Matematica.cs" />
+    <Compile Include="..\CG_Biblioteca\Ponto4D.cs" Link="Biblioteca\Ponto4D.cs" />
+    <Compile Include="..\CG_Biblioteca\Transformacao4D.cs" Link="Biblioteca\Transformacao4D.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Biblioteca\" />
+    <Folder Include="N2_2\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="4.5.0" />
+    <PackageReference Include="OpenTK" Version="3.1.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>
