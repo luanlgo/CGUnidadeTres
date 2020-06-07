@@ -1,0 +1,16 @@
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.csprojAssemblyReference.cache
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.AssemblyInfoInputs.cache
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.AssemblyInfo.cs
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\CrossCutting.deps.json
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\CrossCutting.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\CrossCutting.pdb
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\Biblioteca.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\Biblioteca.pdb
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.csproj.CopyComplete
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\Jantz.ComputerGraphics.Common\obj\Debug\netcoreapp2.2\CrossCutting.pdb
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\CrossCutting\obj\Debug\netcoreapp2.2\CrossCutting.csprojAssemblyReference.cache
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\CrossCutting\obj\Debug\netcoreapp2.2\CrossCutting.AssemblyInfoInputs.cache
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\CrossCutting\obj\Debug\netcoreapp2.2\CrossCutting.AssemblyInfo.cs
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\CrossCutting\obj\Debug\netcoreapp2.2\CrossCutting.dll
+C:\Users\55479\Desktop\Furb\CG\UnidadeTres\UnidadeTres\CrossCutting\obj\Debug\netcoreapp2.2\CrossCutting.pdb

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorVetorial", "EditorVetorial\EditorVetorial.csproj", "{877AD082-18F7-406B-A979-463FE8D69BCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorVetorial", "EditorVetorial\EditorVetorial.csproj", "{877AD082-18F7-406B-A979-463FE8D69BCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioteca", "Biblioteca\Biblioteca.csproj", "{FA12E798-F74E-47AC-95E0-4C17FA770098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biblioteca", "Biblioteca\Biblioteca.csproj", "{FA12E798-F74E-47AC-95E0-4C17FA770098}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jantz.ComputerGraphics.Common", "Jantz.ComputerGraphics.Common\Jantz.ComputerGraphics.Common.csproj", "{01E146AE-8C1E-43DE-9F8F-B6784D82D96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossCutting", "CrossCutting\CrossCutting.csproj", "{01E146AE-8C1E-43DE-9F8F-B6784D82D96B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,59 +1,55 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
-using Biblioteca;
+using LibraryComponent;
 using System.Collections.Generic;
 using OpenTK.Input;
-using Jantz.ComputerGraphics.Common;
+using CrossCutting;
 
 namespace EditorVetorial
 {
-    class World : WorldBase
+    class World : CustomGameWindow
     {
-        private Camera Camera { get; set; }
-        private List<ObjetoAramado> objetosLista = new List<ObjetoAramado>();
-        private ObjetoAramado oa;
-        private int mode;
-        private int tmode;
-        private int ptTipo;
-        private Ponto4D lastPonto;
-        private Ponto4D currentPonto;
-        private List<PrimitiveType> tiposLista = new List<PrimitiveType>();
+        private ObjetoAramado _objetoAramado;
+        private int _mode;
+        private int _tmode;
+        private int _ptTipo;
+        private Ponto4D _lastPonto;
+        private Ponto4D _currentPonto;
 
-        private Ponto4D mouse;
-        private Ponto4D mouseEscala;
-        private ObjetoAramado pai;
+        private readonly List<ObjetoAramado> _objetosLista = new List<ObjetoAramado>();
+        private readonly List<PrimitiveType> _tiposLista = new List<PrimitiveType>();
+
+        private Ponto4D _mouse;
+        private Ponto4D _mouseEscala;
+        private ObjetoAramado _objetoAramadoPai;
 
         public World(int width, int height) : base(width, height)
         {
-            Camera = new Camera();
-            this.mode = 2;
-            this.ptTipo = 0;
-            this.tmode = 0;
+            _mode = 2;
+            _ptTipo = 0;
+            _tmode = 0;
 
-            this.tiposLista.Add(PrimitiveType.Lines);
-            this.tiposLista.Add(PrimitiveType.Points);
-            this.tiposLista.Add(PrimitiveType.LineLoop);
-            this.tiposLista.Add(PrimitiveType.LineStrip);
-            this.tiposLista.Add(PrimitiveType.Triangles);
-            this.tiposLista.Add(PrimitiveType.TriangleStrip);
-            this.tiposLista.Add(PrimitiveType.TriangleFan);
-            this.tiposLista.Add(PrimitiveType.Quads);
-            this.tiposLista.Add(PrimitiveType.QuadStrip);
-            this.tiposLista.Add(PrimitiveType.Polygon);
-
-            Console.WriteLine("Create Mode Ativo!");
+            _tiposLista.Add(PrimitiveType.Lines);
+            _tiposLista.Add(PrimitiveType.Points);
+            _tiposLista.Add(PrimitiveType.LineLoop);
+            _tiposLista.Add(PrimitiveType.LineStrip);
+            _tiposLista.Add(PrimitiveType.Triangles);
+            _tiposLista.Add(PrimitiveType.TriangleStrip);
+            _tiposLista.Add(PrimitiveType.TriangleFan);
+            _tiposLista.Add(PrimitiveType.Quads);
+            _tiposLista.Add(PrimitiveType.QuadStrip);
+            _tiposLista.Add(PrimitiveType.Polygon);
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            GL.ClearColor(Color.Gray);
+            GL.ClearColor(System.Drawing.Color.Gray);
 
-            this.oa = new ObjetoAramado(randomString(), color(), this.tiposLista[ptTipo]);
-            this.pai = new ObjetoAramado(randomString(), color(), this.tiposLista[ptTipo]);
-            objetosLista.Add(oa);
+            _objetoAramado = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
+            _objetoAramadoPai = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
+            _objetosLista.Add(_objetoAramado);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -71,28 +67,28 @@ namespace EditorVetorial
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
-            GL.Color3(Color.Red);
+            GL.Color3(System.Drawing.Color.Red);
             GL.LineWidth(10);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex2(0, 0); GL.Vertex2(200, 0);
-            GL.Color3(Color.Green);
+            GL.Color3(System.Drawing.Color.Green);
             GL.Vertex2(0, 0); GL.Vertex2(0, 200);
             GL.End();
 
-            foreach (ObjetoAramado o in objetosLista)
+            foreach (ObjetoAramado o in _objetosLista)
             {
                 o.Desenhar();
             }
 
-            this.pai.DesenharAramado();
+            _objetoAramadoPai.DesenharAramado();
 
             //desenha bbox em torno de objeto selecionado
-            if (this.oa != null && (this.mode == 1 || this.mode == 3)) {
+            if (_objetoAramado != null && (_mode == 1 || _mode == 3)) {
                 double MaiorX = 0;
                 double MaiorY = 0;
                 double MenorX = 999999999;
                 double MenorY = 999999999;
-                foreach (var item in this.oa.pontosLista)
+                foreach (var item in _objetoAramado.pontosLista)
                 {
                     if (item.X > MaiorX)
                         MaiorX = item.X;
@@ -104,19 +100,19 @@ namespace EditorVetorial
                     if (item.Y < MenorY)
                         MenorY = item.Y;
                 }
-                this.oa.BBox.Atualizar(MaiorX,MaiorY,MenorX,MenorY);
-                this.oa.BBox.Desenhar(Color.Yellow);
-                this.oa.BBox.ProcessarCentro();
+                _objetoAramado.BBox.Atualizar(MaiorX,MaiorY,MenorX,MenorY);
+                _objetoAramado.BBox.Desenhar(System.Drawing.Color.Yellow);
+                _objetoAramado.BBox.ProcessarCentro();
             }
 
             //desenha bbox em torno do vertice selecionado
-            if (this.currentPonto != null && this.mode == 0) {
-                this.oa.BBox.Atualizar(this.currentPonto.X,this.currentPonto.Y,this.currentPonto.X,this.currentPonto.Y);
-                this.oa.BBox.Desenhar(Color.Yellow);
-                this.oa.BBox.ProcessarCentro();
+            if (_currentPonto != null && _mode == 0) {
+                _objetoAramado.BBox.Atualizar(_currentPonto.X, _currentPonto.Y, _currentPonto.X, _currentPonto.Y);
+                _objetoAramado.BBox.Desenhar(System.Drawing.Color.Yellow);
+                _objetoAramado.BBox.ProcessarCentro();
             }
             
-            this.SwapBuffers();
+            SwapBuffers();
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
@@ -125,102 +121,90 @@ namespace EditorVetorial
             var x = (e.Position.X / 2);
             var y = 600 - (e.Position.Y / 2);
 
-            if (this.mode == 2)
+            if (_mode == 2)
             {
-                this.lastPonto = new Ponto4D(x, y, 0, 1);
-                this.currentPonto = new Ponto4D(x, y, 0, 1);
-                this.oa.PontosAdicionar(this.lastPonto);
-                this.oa.PontosAdicionar(this.currentPonto);
-                this.oa.DesenharAramado();
+                _lastPonto = new Ponto4D(x, y, 0, 1);
+                _currentPonto = new Ponto4D(x, y, 0, 1);
+                _objetoAramado.PontosAdicionar(_lastPonto);
+                _objetoAramado.PontosAdicionar(_currentPonto);
+                _objetoAramado.DesenharAramado();
             }
-            else if (this.mode == 1)
+            else if (_mode == 1)
             {
-                this.selecionarPoligono(x, y);
+                SelecionarPoligono(x, y);
             }
-            else if (this.mode == 3)
+            else if (_mode == 3)
             {
-                this.selecionarPoligono(x, y);
-                if (this.pai == null) {
-                    this.pai = new ObjetoAramado(randomString(), color(), this.tiposLista[0]);
-                    foreach (var item in this.oa.pontosLista)
+                SelecionarPoligono(x, y);
+                if (_objetoAramadoPai == null) {
+                    _objetoAramadoPai = new ObjetoAramado(RandomString(), Color(), _tiposLista[0]);
+                    foreach (var item in _objetoAramado.pontosLista)
                     {
-                        this.pai.PontosAdicionar(item);
+                        _objetoAramadoPai.PontosAdicionar(item);
                     }
-                    this.oa.PontosRemoverTodos();
-                    this.pai.DesenharAramado();
+                    _objetoAramado.PontosRemoverTodos();
+                    _objetoAramadoPai.DesenharAramado();
                 } else {
-                    foreach (var item in this.oa.pontosLista)
+                    foreach (var item in _objetoAramado.pontosLista)
                     {
-                        this.pai.PontosAdicionar(item);
+                        _objetoAramadoPai.PontosAdicionar(item);
                     }
-                    this.oa.PontosRemoverTodos();
+                    _objetoAramado.PontosRemoverTodos();
                 }
-                // this.selecionarPoligono(x, y);
-                // if (this.pai == null) {
-                //     this.pai = new ObjetoAramado(randomString(), color(), this.tiposLista[0]);
-                //     this.pai.FilhoAdicionar(this.oa);
-                //     this.pai.Desenhar();
-                // } else {
-                //     this.pai.FilhoAdicionar(this.oa);
-                //     this.pai.Desenhar();
-                // }
             }
             else
             {
-                this.selecionarVertice(x, y);
+                SelecionarVertice(x, y);
             }
 
         }
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-
             var x = (e.Position.X / 2);
             var y = 600 - (e.Position.Y / 2);
 
-            if (this.currentPonto != null)
+            if (_currentPonto != null)
             {
-                this.currentPonto.X = x;
-                this.currentPonto.Y = y;
+                _currentPonto.X = x;
+                _currentPonto.Y = y;
             }
 
-            if (this.mode == 1 || this.mode == 3)
+            if (_mode == 1 || _mode == 3)
             {
                 //grava posicoes anteriores do mouse para escala
-                if (this.mouseEscala == null)
-                    this.mouseEscala = new Ponto4D(x,y);
+                if (_mouseEscala == null)
+                    _mouseEscala = new Ponto4D(x,y);
 
                 //grava posicoes anteriores do mouse para translacao
-                if (this.mouse == null) {
-                    this.mouse = new Ponto4D(x,y);
+                if (_mouse == null) {
+                    _mouse = new Ponto4D(x,y);
 
-                    this.oa.BBox.ProcessarCentro();
-                    var MouseX = (this.oa.BBox.obterCentro.X - x)*-1;
-                    var MouseY = (this.oa.BBox.obterCentro.Y - y)*-1;
-                    this.oa.TranslacaoXY(MouseX, MouseY);
+                    _objetoAramado.BBox.ProcessarCentro();
+                    var MouseX = (_objetoAramado.BBox.ObterCentro().X - x)*-1;
+                    var MouseY = (_objetoAramado.BBox.ObterCentro().Y - y)*-1;
+                    _objetoAramado.TranslacaoXY(MouseX, MouseY);
                 }
 
-                var valorX = (this.mouse.X - x)*-1;
-                var valorY = (this.mouse.Y - y)*-1;
+                var valorX = (_mouse.X - x)*-1;
+                var valorY = (_mouse.Y - y)*-1;
 
-                if (this.tmode == 0) {
-                    this.oa.TranslacaoXY(valorX, valorY);
-                } else if (this.tmode == 1) {
-                    this.oa.RotacaoZBBox(valorX);
-                } else if (this.tmode == 2) {
+                if (_tmode == 0) {
+                    _objetoAramado.TranslacaoXY(valorX, valorY);
+                } else if (_tmode == 1) {
+                    _objetoAramado.RotacaoZBBox(valorX);
+                } else if (_tmode == 2) {
                     var valorMultiplicacao = 1.5;
-                    if (x != this.mouse.X) {
-                        if (x > this.mouse.X)
-                            this.oa.EscalaXYBBox(1/valorMultiplicacao);
+                    if (x != _mouse.X) {
+                        if (x > _mouse.X)
+                            _objetoAramado.EscalaXYBBox(1/valorMultiplicacao);
                         else
-                            this.oa.EscalaXYBBox(1*valorMultiplicacao);
+                            _objetoAramado.EscalaXYBBox(1*valorMultiplicacao);
                     }
 
                 }
-
-                this.mouse.X = x;
-                this.mouse.Y = y;
-                
+                _mouse.X = x;
+                _mouse.Y = y;
             }
 
         }
@@ -233,141 +217,130 @@ namespace EditorVetorial
                     Exit();
                     break;
                 case Key.Left:
-                    this.oa.TranslacaoXY(-10, 0);     // N3-Exe10: translação
+                    _objetoAramado.TranslacaoXY(10, 0);
                     break;
                 case Key.Right:
-                    this.oa.TranslacaoXY(10, 0);      // N3-Exe10: translação
+                    _objetoAramado.TranslacaoXY(-10, 0);
                     break;
                 case Key.Up:
-                    this.oa.TranslacaoXY(0, 10);      // N3-Exe10: translação
+                    _objetoAramado.TranslacaoXY(0, -10);
                     break;
                 case Key.Down:
-                    this.oa.TranslacaoXY(0, -10);     // N3-Exe10: translação
+                    _objetoAramado.TranslacaoXY(0, 10);
                     break;
                 case Key.PageUp:
-                    this.oa.EscalaXY(2, 2);
+                    _objetoAramado.EscalaXY(2, 2);
                     break;
                 case Key.PageDown:
-                    this.oa.EscalaXY(0.5, 0.5);
+                    _objetoAramado.EscalaXY(0.5, 0.5);
                     break;
                 case Key.Number9:
-                    this.oa.EscalaXYBBox(0.5);        // N3-Exe11: escala
+                    _objetoAramado.EscalaXYBBox(0.5);
                     break;
                 case Key.Number0:
-                    this.oa.EscalaXYBBox(2);          // N3-Exe11: escala
+                    _objetoAramado.EscalaXYBBox(2);
                     break;
                 case Key.Number1:
-                    this.oa.RotacaoZ(10);
+                    _objetoAramado.RotacaoZ(10);
                     break;
                 case Key.Number2:
-                    this.oa.RotacaoZ(-10);
+                    _objetoAramado.RotacaoZ(-10);
                     break;
                 case Key.Number3:
-                    this.oa.RotacaoZBBox(10);         // N3-Exe12: rotação
+                    _objetoAramado.RotacaoZBBox(10);
                     break;
                 case Key.Number4:
-                    this.oa.RotacaoZBBox(-10);        // N3-Exe12: rotação
+                    _objetoAramado.RotacaoZBBox(-10);
                     break;
                 case Key.R:
-                    this.oa.Cor[0] = this.oa.Cor[0] + 0.1;
+                    _objetoAramado.Cor[0] = _objetoAramado.Cor[0] + 0.1;
                     break;
                 case Key.G:
-                    this.oa.Cor[1] = this.oa.Cor[1] + 0.1;
+                    _objetoAramado.Cor[1] = _objetoAramado.Cor[1] + 0.1;
                     break;
                 case Key.B:
-                    this.oa.Cor[2] = this.oa.Cor[2] + 0.1;
+                    _objetoAramado.Cor[2] = _objetoAramado.Cor[2] + 0.1;
                     break;
                 case Key.V:
-                    removeV();
+                    RemoveV();
                     break;
                 case Key.P:
-                    Console.WriteLine("Atribuido pai a selecao");
-                    this.oa = this.pai;
-                    this.oa.Desenhar();
-                    this.oa.PontosExibirObjeto();
+                    _objetoAramado = _objetoAramadoPai;
+                    _objetoAramado.Desenhar();
+                    _objetoAramado.PontosExibirObjeto();
                     break;
                 case Key.Z:
-                    if (this.tmode < 3)
-                        this.tmode = 99;
+                    if (_tmode < 3)
+                        _tmode = 99;
                     else
-                        this.tmode = 0;
+                        _tmode = 0;
                     break;
                 case Key.C:
-                    if (this.mode == 0)
+                    if (_mode == 0)
                     {
-                        Console.WriteLine("Select Mode Ativo!");
-                        this.mode = 1;
-                        // this.tiraRastro();
+                        _mode = 1;
                     }
-                    else if (this.mode == 1)
+                    else if (_mode == 1)
                     {
-                        Console.WriteLine("Create Mode Ativo!");
-                        this.mode = 2;
-                        this.colocaRastro();
+                        _mode = 2;
+                        ColocaRastro();
                     }
-                    else if (this.mode == 2)
+                    else if (_mode == 2)
                     {
-                        Console.WriteLine("GrafoScene Mode Ativo!");
-                        this.mode = 3;
-                        this.tiraRastro();
+                        _mode = 3;
+                        TiraRastro();
                     }
                     else
                     {
-                        Console.WriteLine("Select Vertice Mode Ativo!");
-                        this.mode = 0;
+                        _mode = 0;
                     }
                     break;
                 case Key.L:
-                    if (this.tmode == 0)
+                    if (_tmode == 0)
                     {
-                        Console.WriteLine("Rotação Ativa!");
-                        this.tmode = 1;
+                        _tmode = 1;
                     }
-                    else if (this.tmode == 1)
+                    else if (_tmode == 1)
                     {
-                        Console.WriteLine("Escala Ativa!");
-                        this.tmode = 2;
-                        this.mouse = null;
+                        _tmode = 2;
+                        _mouse = null;
                     }
                     else
                     {
-                        Console.WriteLine("Translação Ativa!");
-                        this.tmode = 0;
+                        _tmode = 0;
                     }
                     break;
                 case Key.T:
-                    Console.WriteLine("Primitiva alterada!");
-                    trocaPrimitiva();
+                    TrocaPrimitiva();
                     break;
                 case Key.N:
-                    novoObjeto();
+                    NovoObjeto();
                     break;
                 case Key.X:
-                    this.currentPonto = null;
+                    _currentPonto = null;
                     break;
                 default:
                     break;
             }
         }
 
-        public double[] color()
+        public double[] Color()
         {
             Random random = new Random();
             return new double[] { random.NextDouble(), random.NextDouble(), random.NextDouble() };
         }
 
-        public void criarVertice()
+        public void CriarVertice()
         {
-            this.oa = new ObjetoAramado(randomString(), color(), this.tiposLista[ptTipo]);
-            this.objetosLista.Add(oa);
+            _objetoAramado = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
+            _objetosLista.Add(_objetoAramado);
         }
 
-        public void selecionarVertice(double x, double y)
+        public void SelecionarVertice(double x, double y)
         {
             Ponto4D pto_prox = new Ponto4D(999999999,999999999,0);
             double ptoi_prox = 999999999;
-            double distanciaEuclidiana = 999999999;
-            foreach (ObjetoAramado objeto in this.objetosLista)
+            foreach (ObjetoAramado objeto in _objetosLista)
             {
                 foreach (Ponto4D pto in objeto.pontosLista)
                 {
@@ -375,54 +348,53 @@ namespace EditorVetorial
                     double y1 = y;
                     double x2 = pto.X;
                     double y2 = pto.Y;
-                    distanciaEuclidiana = Math.Sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
+                    double distanciaEuclidiana = Math.Sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)));
                     if (distanciaEuclidiana < ptoi_prox) {
                         pto_prox = pto;
                         ptoi_prox = distanciaEuclidiana;
-                        this.oa = objeto;
+                        _objetoAramado = objeto;
                     }
                 }
             }
-            this.currentPonto = pto_prox;
+            _currentPonto = pto_prox;
         }
 
-        public void novoObjeto()
+        public void NovoObjeto()
         {
-            this.tiraRastro();
-            this.criarVertice();
+            TiraRastro();
+            CriarVertice();
         }
 
-        public void tiraRastro()
+        public void TiraRastro()
         {
-            this.currentPonto = null;
-            this.lastPonto = this.currentPonto;
-            if (this.oa.pontosLista.Count > 0)
-                this.oa.pontosLista.RemoveAt(this.oa.pontosLista.Count - 1);
+            _currentPonto = null;
+            _lastPonto = _currentPonto;
+            if (_objetoAramado.pontosLista.Count > 0)
+                _objetoAramado.pontosLista.RemoveAt(_objetoAramado.pontosLista.Count - 1);
         }
 
-        public void removeV()
+        public void RemoveV()
         {
-            for (int i = 0; i < this.oa.pontosLista.Count; i++)
+            for (int i = 0; i < _objetoAramado.pontosLista.Count; i++)
             {
-                if (this.oa.pontosLista[i].X == this.currentPonto.X && this.oa.pontosLista[i].Y == this.currentPonto.Y)
-                    this.oa.pontosLista.RemoveAt(i);
+                if (_objetoAramado.pontosLista[i].X == _currentPonto.X && _objetoAramado.pontosLista[i].Y == _currentPonto.Y)
+                    _objetoAramado.pontosLista.RemoveAt(i);
             }
-            tiraRastro();
+            TiraRastro();
         }
 
-        public void colocaRastro()
+        public void ColocaRastro()
         {
-            this.currentPonto = new Ponto4D(300, 300, 0, 1);
-            this.oa.PontosAdicionar(this.currentPonto);
+            _currentPonto = new Ponto4D(300, 300, 0, 1);
+            _objetoAramado.PontosAdicionar(_currentPonto);
         }
 
-        public void selecionarPoligono(int x, int yi)
+        public void SelecionarPoligono(int x, int yi)
         {
             int count = 0;
 
-            foreach (ObjetoAramado item in this.objetosLista)
+            foreach (ObjetoAramado item in _objetosLista)
             {
-
                 for (int i = 0; i < item.pontosLista.Count; i++)
                 {
                     if (i + 1 < item.pontosLista.Count)
@@ -440,24 +412,18 @@ namespace EditorVetorial
                 }
                 
                 if (!((count%2)==0)) {
-                    Console.WriteLine("Poligono "+item.Rotulo+" selecionado!");
-                    this.oa = item;
+                    _objetoAramado = item;
                     break;
                 }
-                
             }
-
         }
 
-        public void trocaPrimitiva()
+        public void TrocaPrimitiva()
         {
-            if (this.ptTipo >= 9)
-                this.ptTipo = 0;
-            else
-                this.ptTipo++;
+            _ptTipo = _ptTipo >= 9? 0: _ptTipo++;
         }
 
-        public static string randomString()
+        public static string RandomString()
         {
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var stringChars = new char[8];
@@ -465,11 +431,10 @@ namespace EditorVetorial
 
             for (int i = 0; i < stringChars.Length; i++)
             {
-            stringChars[i] = chars[random.Next(chars.Length)];
+                stringChars[i] = chars[random.Next(chars.Length)];
             }
 
             return new String(stringChars);
         }
-
     }
 }

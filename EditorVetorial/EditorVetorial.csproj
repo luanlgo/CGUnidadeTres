@@ -12,11 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Biblioteca">
       <HintPath>..\Biblioteca\bin\Debug\netcoreapp2.2\Biblioteca.dll</HintPath>
-    </Reference>
-    <Reference Include="Jantz.ComputerGraphics.Common">
-      <HintPath>..\Jantz.ComputerGraphics.Common\bin\Debug\netcoreapp2.2\Jantz.ComputerGraphics.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
 

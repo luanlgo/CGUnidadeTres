@@ -5,7 +5,7 @@
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     public class BBox
     {
@@ -27,6 +27,14 @@ namespace Biblioteca
         {
             this.MenorX = pto.X; this.MenorY = pto.Y; this.MenorZ = pto.Z;
             this.MaiorX = pto.X; this.MaiorY = pto.Y; this.MaiorZ = pto.Z;
+        }
+
+        public void Atualizar(double maiorX, double maiorY, double menorX, double menorY)
+        {
+            this.MaiorX = maiorX;
+            this.MaiorY = maiorY;
+            this.MenorX = menorX;
+            this.MaiorY = menorY;
         }
 
         public void Atualizar(Ponto4D pto)
@@ -55,6 +63,9 @@ namespace Biblioteca
                 if (z > MaiorZ) MaiorZ = z;
             }
         }
+
+        public Ponto4D ObterCentro()
+            => Centro;
 
         public void ProcessarCentro()
         {

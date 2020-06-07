@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Biblioteca
+namespace LibraryComponent
 {
     /// <summary>
     /// Classe que define as Transformacoes Geometricas no espaco 3D
