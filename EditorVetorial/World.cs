@@ -10,19 +10,19 @@ namespace EditorVetorial
 {
     class World : CustomGameWindow
     {
-        private ObjetoAramado _objetoAramado;
+        private ListPontos _pontos;
         private int _mode;
         private int _tmode;
         private int _ptTipo;
         private Ponto4D _lastPonto;
         private Ponto4D _currentPonto;
 
-        private readonly List<ObjetoAramado> _objetosLista = new List<ObjetoAramado>();
+        private readonly List<ListPontos> _pontosList = new List<ListPontos>();
         private readonly List<PrimitiveType> _tiposLista = new List<PrimitiveType>();
 
         private Ponto4D _mouse;
         private Ponto4D _mouseEscala;
-        private ObjetoAramado _objetoAramadoPai;
+        private ListPontos _pontosPai;
 
         public World(int width, int height) : base(width, height)
         {
@@ -47,9 +47,9 @@ namespace EditorVetorial
             base.OnLoad(e);
             GL.ClearColor(System.Drawing.Color.Gray);
 
-            _objetoAramado = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
-            _objetoAramadoPai = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
-            _objetosLista.Add(_objetoAramado);
+            _pontos = new ListPontos("amarado", Color(), _tiposLista[_ptTipo]);
+            _pontosPai = new ListPontos("amarado", Color(), _tiposLista[_ptTipo]);
+            _pontosList.Add(_pontos);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -75,20 +75,20 @@ namespace EditorVetorial
             GL.Vertex2(0, 0); GL.Vertex2(0, 200);
             GL.End();
 
-            foreach (ObjetoAramado o in _objetosLista)
+            foreach (ListPontos o in _pontosList)
             {
                 o.Desenhar();
             }
 
-            _objetoAramadoPai.DesenharAramado();
+            _pontosPai.DesenharPonto();
 
             //desenha bbox em torno de objeto selecionado
-            if (_objetoAramado != null && (_mode == 1 || _mode == 3)) {
+            if (_pontos != null && (_mode == 1 || _mode == 3)) {
                 double MaiorX = 0;
                 double MaiorY = 0;
                 double MenorX = 999999999;
                 double MenorY = 999999999;
-                foreach (var item in _objetoAramado.pontosLista)
+                foreach (var item in _pontos.pontosLista)
                 {
                     if (item.X > MaiorX)
                         MaiorX = item.X;
@@ -100,16 +100,16 @@ namespace EditorVetorial
                     if (item.Y < MenorY)
                         MenorY = item.Y;
                 }
-                _objetoAramado.BBox.Atualizar(MaiorX,MaiorY,MenorX,MenorY);
-                _objetoAramado.BBox.Desenhar(System.Drawing.Color.Yellow);
-                _objetoAramado.BBox.ProcessarCentro();
+                _pontos.BBox.Atualizar(MaiorX,MaiorY,MenorX,MenorY);
+                _pontos.BBox.Desenhar(System.Drawing.Color.Yellow);
+                _pontos.BBox.ProcessarCentro();
             }
 
             //desenha bbox em torno do vertice selecionado
             if (_currentPonto != null && _mode == 0) {
-                _objetoAramado.BBox.Atualizar(_currentPonto.X, _currentPonto.Y, _currentPonto.X, _currentPonto.Y);
-                _objetoAramado.BBox.Desenhar(System.Drawing.Color.Yellow);
-                _objetoAramado.BBox.ProcessarCentro();
+                _pontos.BBox.Atualizar(_currentPonto.X, _currentPonto.Y, _currentPonto.X, _currentPonto.Y);
+                _pontos.BBox.Desenhar(System.Drawing.Color.Yellow);
+                _pontos.BBox.ProcessarCentro();
             }
             
             SwapBuffers();
@@ -117,17 +117,16 @@ namespace EditorVetorial
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-
-            var x = (e.Position.X / 2);
-            var y = 600 - (e.Position.Y / 2);
-
+            var x = GetXEventMouse(e);
+            var y = GetYEventMouse(e);
+            Console.WriteLine(x.ToString(), y.ToString());
             if (_mode == 2)
             {
                 _lastPonto = new Ponto4D(x, y, 0, 1);
                 _currentPonto = new Ponto4D(x, y, 0, 1);
-                _objetoAramado.PontosAdicionar(_lastPonto);
-                _objetoAramado.PontosAdicionar(_currentPonto);
-                _objetoAramado.DesenharAramado();
+                _pontos.PontosAdicionar(_lastPonto);
+                _pontos.PontosAdicionar(_currentPonto);
+                _pontos.DesenharPonto();
             }
             else if (_mode == 1)
             {
@@ -136,27 +135,26 @@ namespace EditorVetorial
             else if (_mode == 3)
             {
                 SelecionarPoligono(x, y);
-                if (_objetoAramadoPai == null) {
-                    _objetoAramadoPai = new ObjetoAramado(RandomString(), Color(), _tiposLista[0]);
-                    foreach (var item in _objetoAramado.pontosLista)
+                if (_pontosPai == null) {
+                    _pontosPai = new ListPontos("ponto", Color(), _tiposLista[0]);
+                    foreach (var item in _pontos.pontosLista)
                     {
-                        _objetoAramadoPai.PontosAdicionar(item);
+                        _pontosPai.PontosAdicionar(item);
                     }
-                    _objetoAramado.PontosRemoverTodos();
-                    _objetoAramadoPai.DesenharAramado();
+                    _pontos.PontosRemoverTodos();
+                    _pontosPai.DesenharPonto();
                 } else {
-                    foreach (var item in _objetoAramado.pontosLista)
+                    foreach (var item in _pontos.pontosLista)
                     {
-                        _objetoAramadoPai.PontosAdicionar(item);
+                        _pontosPai.PontosAdicionar(item);
                     }
-                    _objetoAramado.PontosRemoverTodos();
+                    _pontos.PontosRemoverTodos();
                 }
             }
             else
             {
                 SelecionarVertice(x, y);
             }
-
         }
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
@@ -180,26 +178,26 @@ namespace EditorVetorial
                 if (_mouse == null) {
                     _mouse = new Ponto4D(x,y);
 
-                    _objetoAramado.BBox.ProcessarCentro();
-                    var MouseX = (_objetoAramado.BBox.ObterCentro().X - x)*-1;
-                    var MouseY = (_objetoAramado.BBox.ObterCentro().Y - y)*-1;
-                    _objetoAramado.TranslacaoXY(MouseX, MouseY);
+                    _pontos.BBox.ProcessarCentro();
+                    var MouseX = (_pontos.BBox.ObterCentro().X - x)*-1;
+                    var MouseY = (_pontos.BBox.ObterCentro().Y - y)*-1;
+                    _pontos.TranslacaoXY(MouseX, MouseY);
                 }
 
                 var valorX = (_mouse.X - x)*-1;
                 var valorY = (_mouse.Y - y)*-1;
 
                 if (_tmode == 0) {
-                    _objetoAramado.TranslacaoXY(valorX, valorY);
+                    _pontos.TranslacaoXY(valorX, valorY);
                 } else if (_tmode == 1) {
-                    _objetoAramado.RotacaoZBBox(valorX);
+                    _pontos.RotacaoZBBox(valorX);
                 } else if (_tmode == 2) {
                     var valorMultiplicacao = 1.5;
                     if (x != _mouse.X) {
                         if (x > _mouse.X)
-                            _objetoAramado.EscalaXYBBox(1/valorMultiplicacao);
+                            _pontos.EscalaXYBBox(1/valorMultiplicacao);
                         else
-                            _objetoAramado.EscalaXYBBox(1*valorMultiplicacao);
+                            _pontos.EscalaXYBBox(1*valorMultiplicacao);
                     }
 
                 }
@@ -217,57 +215,57 @@ namespace EditorVetorial
                     Exit();
                     break;
                 case Key.Left:
-                    _objetoAramado.TranslacaoXY(10, 0);
+                    _pontos.TranslacaoXY(10, 0);
                     break;
                 case Key.Right:
-                    _objetoAramado.TranslacaoXY(-10, 0);
+                    _pontos.TranslacaoXY(-10, 0);
                     break;
                 case Key.Up:
-                    _objetoAramado.TranslacaoXY(0, -10);
+                    _pontos.TranslacaoXY(0, -10);
                     break;
                 case Key.Down:
-                    _objetoAramado.TranslacaoXY(0, 10);
+                    _pontos.TranslacaoXY(0, 10);
                     break;
                 case Key.PageUp:
-                    _objetoAramado.EscalaXY(2, 2);
+                    _pontos.EscalaXY(2, 2);
                     break;
                 case Key.PageDown:
-                    _objetoAramado.EscalaXY(0.5, 0.5);
+                    _pontos.EscalaXY(0.5, 0.5);
                     break;
                 case Key.Number9:
-                    _objetoAramado.EscalaXYBBox(0.5);
+                    _pontos.EscalaXYBBox(0.5);
                     break;
                 case Key.Number0:
-                    _objetoAramado.EscalaXYBBox(2);
+                    _pontos.EscalaXYBBox(2);
                     break;
                 case Key.Number1:
-                    _objetoAramado.RotacaoZ(10);
+                    _pontos.RotacaoZ(10);
                     break;
                 case Key.Number2:
-                    _objetoAramado.RotacaoZ(-10);
+                    _pontos.RotacaoZ(-10);
                     break;
                 case Key.Number3:
-                    _objetoAramado.RotacaoZBBox(10);
+                    _pontos.RotacaoZBBox(10);
                     break;
                 case Key.Number4:
-                    _objetoAramado.RotacaoZBBox(-10);
+                    _pontos.RotacaoZBBox(-10);
                     break;
                 case Key.R:
-                    _objetoAramado.Cor[0] = _objetoAramado.Cor[0] + 0.1;
+                    _pontos.Cor[0] = _pontos.Cor[0] + 0.1;
                     break;
                 case Key.G:
-                    _objetoAramado.Cor[1] = _objetoAramado.Cor[1] + 0.1;
+                    _pontos.Cor[1] = _pontos.Cor[1] + 0.1;
                     break;
                 case Key.B:
-                    _objetoAramado.Cor[2] = _objetoAramado.Cor[2] + 0.1;
+                    _pontos.Cor[2] = _pontos.Cor[2] + 0.1;
                     break;
                 case Key.V:
                     RemoveV();
                     break;
                 case Key.P:
-                    _objetoAramado = _objetoAramadoPai;
-                    _objetoAramado.Desenhar();
-                    _objetoAramado.PontosExibirObjeto();
+                    _pontos = _pontosPai;
+                    _pontos.Desenhar();
+                    _pontos.PontosExibirObjeto();
                     break;
                 case Key.Z:
                     if (_tmode < 3)
@@ -332,15 +330,15 @@ namespace EditorVetorial
 
         public void CriarVertice()
         {
-            _objetoAramado = new ObjetoAramado(RandomString(), Color(), _tiposLista[_ptTipo]);
-            _objetosLista.Add(_objetoAramado);
+            _pontos = new ListPontos("ponto", Color(), _tiposLista[_ptTipo]);
+            _pontosList.Add(_pontos);
         }
 
         public void SelecionarVertice(double x, double y)
         {
             Ponto4D pto_prox = new Ponto4D(999999999,999999999,0);
             double ptoi_prox = 999999999;
-            foreach (ObjetoAramado objeto in _objetosLista)
+            foreach (ListPontos objeto in _pontosList)
             {
                 foreach (Ponto4D pto in objeto.pontosLista)
                 {
@@ -352,7 +350,7 @@ namespace EditorVetorial
                     if (distanciaEuclidiana < ptoi_prox) {
                         pto_prox = pto;
                         ptoi_prox = distanciaEuclidiana;
-                        _objetoAramado = objeto;
+                        _pontos = objeto;
                     }
                 }
             }
@@ -369,16 +367,16 @@ namespace EditorVetorial
         {
             _currentPonto = null;
             _lastPonto = _currentPonto;
-            if (_objetoAramado.pontosLista.Count > 0)
-                _objetoAramado.pontosLista.RemoveAt(_objetoAramado.pontosLista.Count - 1);
+            if (_pontos.pontosLista.Count > 0)
+                _pontos.pontosLista.RemoveAt(_pontos.pontosLista.Count - 1);
         }
 
         public void RemoveV()
         {
-            for (int i = 0; i < _objetoAramado.pontosLista.Count; i++)
+            for (int i = 0; i < _pontos.pontosLista.Count; i++)
             {
-                if (_objetoAramado.pontosLista[i].X == _currentPonto.X && _objetoAramado.pontosLista[i].Y == _currentPonto.Y)
-                    _objetoAramado.pontosLista.RemoveAt(i);
+                if (_pontos.pontosLista[i].X == _currentPonto.X && _pontos.pontosLista[i].Y == _currentPonto.Y)
+                    _pontos.pontosLista.RemoveAt(i);
             }
             TiraRastro();
         }
@@ -386,14 +384,14 @@ namespace EditorVetorial
         public void ColocaRastro()
         {
             _currentPonto = new Ponto4D(300, 300, 0, 1);
-            _objetoAramado.PontosAdicionar(_currentPonto);
+            _pontos.PontosAdicionar(_currentPonto);
         }
 
         public void SelecionarPoligono(int x, int yi)
         {
             int count = 0;
 
-            foreach (ObjetoAramado item in _objetosLista)
+            foreach (ListPontos item in _pontosList)
             {
                 for (int i = 0; i < item.pontosLista.Count; i++)
                 {
@@ -412,7 +410,7 @@ namespace EditorVetorial
                 }
                 
                 if (!((count%2)==0)) {
-                    _objetoAramado = item;
+                    _pontos = item;
                     break;
                 }
             }
@@ -423,18 +421,8 @@ namespace EditorVetorial
             _ptTipo = _ptTipo >= 9? 0: _ptTipo++;
         }
 
-        public static string RandomString()
-        {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
-            var random = new Random();
+        private int GetXEventMouse(MouseButtonEventArgs e) => (e.Position.X / 2);
 
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            return new String(stringChars);
-        }
+        private int GetYEventMouse(MouseButtonEventArgs e) => 600 - (e.Position.Y / 2);
     }
 }

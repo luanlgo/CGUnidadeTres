@@ -36,13 +36,13 @@ namespace LibraryComponent
         {
             GL.PushMatrix();                                    // N3-Exe14: grafo de cena
             GL.MultMatrix(_matriz.ObterDados());
-            DesenharAramado();
+            DesenharPonto();
             for (var i = 0; i < Objetos.Count; i++)
                 Objetos[i].Desenhar();
             GL.PopMatrix();           
         }
 
-        public abstract void DesenharAramado();
+        public abstract void DesenharPonto();
 
         public void FilhoAdicionar(Objeto filho)
         {
